@@ -1,6 +1,6 @@
 # City Isochrones vs GHSL
 
-Interactive map comparing free-flow driving isochrones (30 / 60 / 90 min) from a city's centre with the
+Interactive map comparing travel-time isochrones (30 / 60 / 90 min) from or to a city's centre with the
 [Global Human Settlement Layer](https://human-settlement.emergency.copernicus.eu/) city definitions:
 
 - **Urban Centre** (GHS-UCDB R2024A): the dense built-up core
@@ -15,6 +15,12 @@ the share of the GHSL area covered, and the share of the isochrone outside it. T
 1. Open the page (GitHub Pages link) or run it locally (below).
 2. Paste your own **HERE API key** in the sidebar. It is stored only in your browser.
 3. Search for any of the 11,422 GHSL urban centres. Click the map to move the origin.
+4. Choose the travel settings:
+   - **Mode**: car, walking, bicycle or scooter.
+   - **Traffic** (car and scooter): free flow, or typical weekday traffic at 8:00, 12:00, 17:30 or 3:00,
+     in the city's local time.
+   - **Direction**: *from* the centre (leaving at that time), or *to* the centre (everywhere you could
+     leave from and still arrive by that time), which is closer to a commuting definition.
 
 ### Getting a free HERE API key
 
@@ -35,8 +41,9 @@ On macOS you can double-click `start.command`. Optionally put your key in `confi
 
 ## Data and method
 
-- Isochrones: HERE Isoline Routing API v8, `transportMode=car`, `departureTime=any` (no traffic),
-  origin = GHSL urban-centre centroid.
+- Isochrones: HERE Isoline Routing API v8, origin = GHSL urban-centre centroid. Free flow uses
+  `departureTime=any`; weekday times use HERE's historical traffic for the next Tuesday. "To the centre"
+  uses `destination` + `arrivalTime`. Public transit is not available in HERE's isoline API.
 - GHSL boundaries simplified at 100 m. Each 2024 urban centre is linked to the FUA containing its
   centroid (9,347 of 11,422 have one). Rebuild with `scripts/prepare_ghsl.py` after downloading the
   GHSL archives into `data/raw/`.

@@ -38,6 +38,12 @@
   #results li { padding: 6px 10px; cursor: pointer; display: flex; justify-content: space-between; gap: 8px; }
   #results li:hover, #results li.active { background: var(--bg); }
   #results .pop { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
+  .opts .wide { grid-column: 1 / -1; }
+  select { width: 100%; padding: 7px 8px; border: 1px solid var(--line); border-radius: 6px;
+    background: var(--bg); color: var(--text); font: inherit; }
+  select:disabled { opacity: .5; }
+  .settings { font-size: 12px; color: var(--muted); margin-top: 6px; }
   button { padding: 7px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text);
     font: inherit; cursor: pointer; }
   button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
@@ -68,12 +74,41 @@
 <div id="app">
   <aside id="side">
     <h1>City Isochrones vs GHSL</h1>
-    <p class="sub">Free-flow driving isochrones (30 / 60 / 90 min) from the GHSL urban-centre centroid, compared with the GHSL Urban Centre and Functional Urban Area.</p>
+    <p class="sub">Travel-time isochrones (30 / 60 / 90 min) from or to the GHSL urban-centre centroid, compared with the GHSL Urban Centre and Functional Urban Area.</p>
 
     <label for="q">City (GHSL urban centre)</label>
     <div class="search">
       <input id="q" type="text" placeholder="e.g. Chicago, Lisbon, Lagos…" autocomplete="off">
       <ul id="results"></ul>
+    </div>
+
+    <div class="opts">
+      <div>
+        <label for="mode">Mode</label>
+        <select id="mode">
+          <option value="car">Car</option>
+          <option value="pedestrian">Walking</option>
+          <option value="bicycle">Bicycle</option>
+          <option value="scooter">Scooter / moped</option>
+        </select>
+      </div>
+      <div>
+        <label for="traffic">Traffic</label>
+        <select id="traffic">
+          <option value="any">Free flow (no traffic)</option>
+          <option value="08:00">Weekday 8:00 (AM peak)</option>
+          <option value="17:30">Weekday 17:30 (PM peak)</option>
+          <option value="12:00">Weekday 12:00 (midday)</option>
+          <option value="03:00">Weekday 3:00 (night)</option>
+        </select>
+      </div>
+      <div class="wide">
+        <label for="dir">Direction</label>
+        <select id="dir">
+          <option value="from">From the centre (leaving at that time)</option>
+          <option value="to">To the centre (arriving by that time)</option>
+        </select>
+      </div>
     </div>
 
     <label for="key">HERE API key</label>
@@ -98,7 +133,10 @@
       <p><b>IoU</b> = area(isochrone ∩ GHSL) / area(isochrone ∪ GHSL); 1 means identical shapes.
       <b>GHSL covered</b> = share of the GHSL area inside the isochrone.
       <b>Outside GHSL</b> = share of the isochrone area beyond the GHSL boundary.
-      Areas are geodesic (Turf.js). Isochrones: HERE Isoline Routing v8, car, <code>departureTime=any</code> (no traffic).
+      Areas are geodesic (Turf.js). Isochrones: HERE Isoline Routing v8.
+      <b>Free flow</b> ignores traffic. The weekday times use HERE's typical traffic for that hour on the next Tuesday,
+      in the city's local time. <b>To the centre</b> computes a reverse isochrone: everywhere you could leave from and
+      still arrive at the origin within the time. Traffic only applies to car and scooter.
       GHSL polygons simplified at 100 m.</p>
     </details>
   </aside>
@@ -259,22 +297,64 @@ function decodeFlexPolyline(str) {
   return pts;
 }
 
+// ---------- travel settings ----------
+const TRAFFIC_MODES = ['car', 'scooter'];
+const MODE_LABEL = { car: 'Car', pedestrian: 'Walking', bicycle: 'Bicycle', scooter: 'Scooter' };
+
+// Date of the next Tuesday (a typical weekday for HERE's historical traffic), as YYYY-MM-DD.
+function nextTuesday() {
+  const d = new Date();
+  d.setDate(d.getDate() + ((2 - d.getDay() + 7) % 7 || 7));
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+function settings() {
+  const mode = $('mode').value;
+  const traffic = TRAFFIC_MODES.includes(mode) ? $('traffic').value : 'any';
+  return { mode, traffic, dir: $('dir').value };
+}
+
+function settingsLabel(s = settings()) {
+  const when = s.traffic === 'any'
+    ? (TRAFFIC_MODES.includes(s.mode) ? 'free flow' : '')
+    : `weekday ${s.dir === 'to' ? 'arriving' : 'leaving'} ${s.traffic}`;
+  return [MODE_LABEL[s.mode], s.dir === 'to' ? 'to centre' : 'from centre', when].filter(Boolean).join(' · ');
+}
+
+for (const id of ['mode', 'traffic', 'dir']) {
+  const saved = store.get(`opt:${id}`);
+  if (saved && [...$(id).options].some(o => o.value === saved)) $(id).value = saved;
+  $(id).addEventListener('change', () => { store.set(`opt:${id}`, $(id).value); syncControls(); if (city) runIsochrones(); });
+}
+function syncControls() {
+  const hasTraffic = TRAFFIC_MODES.includes($('mode').value);
+  $('traffic').disabled = !hasTraffic;
+  $('traffic').title = hasTraffic ? '' : 'Traffic does not apply to walking or cycling';
+}
+syncControls();
+
 // ---------- isochrones ----------
-async function fetchIsolines(key, lat, lon) {
-  const cacheKey = `iso:v1:${lat.toFixed(4)},${lon.toFixed(4)}`;
+async function fetchIsolines(key, lat, lon, s) {
+  const cacheKey = `iso:v2:${s.mode}:${s.traffic}:${s.dir}:${lat.toFixed(4)},${lon.toFixed(4)}`;
   const cached = store.get(cacheKey);
   if (cached) return JSON.parse(cached);
+  // Times without a UTC offset are read by HERE as local time at the origin/destination.
+  const time = s.traffic === 'any' ? 'any' : `${nextTuesday()}T${s.traffic}:00`;
   const p = new URLSearchParams({
-    transportMode: 'car', origin: `${lat},${lon}`, 'range[type]': 'time',
-    'range[values]': TIMES.map(t => t * 60).join(','), departureTime: 'any', apiKey: key,
+    transportMode: s.mode, 'range[type]': 'time',
+    'range[values]': TIMES.map(t => t * 60).join(','), apiKey: key,
   });
+  if (s.dir === 'to') { p.set('destination', `${lat},${lon}`); p.set('arrivalTime', time); }
+  else { p.set('origin', `${lat},${lon}`); p.set('departureTime', time); }
   const r = await fetch(`https://isoline.router.hereapi.com/v8/isolines?${p}`);
   const js = await r.json();
   if (!r.ok) throw new Error(`HERE ${r.status}: ${js.title || js.error_description || js.error || 'request failed'}`);
   const out = {};
   for (const iso of js.isolines) {
     const polys = iso.polygons.map(pg => [decodeFlexPolyline(pg.outer), ...(pg.inner || []).map(decodeFlexPolyline)]);
-    out[iso.range.value / 60] = turf.feature({ type: 'MultiPolygon', coordinates: polys }, { minutes: iso.range.value / 60 });
+    out[iso.range.value / 60] = turf.feature({ type: 'MultiPolygon', coordinates: polys },
+      { minutes: iso.range.value / 60, mode: s.mode, traffic: s.traffic, direction: s.dir });
   }
   store.set(cacheKey, JSON.stringify(out));
   return out;
@@ -288,9 +368,9 @@ async function runIsochrones() {
   renderStats();
   if (!key) { status('Enter a HERE API key to compute isochrones. GHSL boundaries are shown.', true); return; }
   const id = ++runId;
-  status('Requesting isochrones from HERE…');
+  status(`Requesting isochrones from HERE (${settingsLabel()})…`);
   try {
-    const res = await fetchIsolines(key, origin[0], origin[1]);
+    const res = await fetchIsolines(key, origin[0], origin[1], settings());
     if (id !== runId) return;
     isos = res;
     for (const t of TIMES) {
@@ -331,7 +411,8 @@ function renderStats() {
   let html = `<div class="city"><h2>${city.name}, ${city.country}</h2>
     <div class="facts">Urban Centre pop. 2025: ${fmt(city.pop)} · ${fmt(city.area_km2)} km²` +
     (city.fua ? `<br>FUA “${city.fua.name}” pop. 2015: ${fmt(city.fua.pop2015)} · ${fmt(city.fua.area_km2)} km²` : '<br>No GHSL FUA for this urban centre') +
-    `<br>Origin: ${origin[0].toFixed(4)}, ${origin[1].toFixed(4)}</div>`;
+    `<br>Origin: ${origin[0].toFixed(4)}, ${origin[1].toFixed(4)}</div>` +
+    (Object.keys(isos).length ? `<div class="settings">Isochrones: ${settingsLabel()}</div>` : '');
   html += statsTable('vs Urban Centre', css('--uc'), city.uc, ucArea);
   if (city.fua) html += statsTable('vs FUA', css('--fua'), city.fua.geometry, turf.area(turf.feature(city.fua.geometry)) / 1e6);
   $('cityInfo').innerHTML = html + '</div>';
@@ -346,7 +427,8 @@ $('download').addEventListener('click', () => {
   const blob = new Blob([JSON.stringify(turf.featureCollection(feats))], { type: 'application/geo+json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `${city.name.replace(/\W+/g, '_')}_isochrones_ghsl.geojson`;
+  const s = settings();
+  a.download = `${city.name.replace(/\W+/g, '_')}_${s.mode}_${s.dir}_${s.traffic.replace(':', '')}_isochrones_ghsl.geojson`;
   a.click();
 });
 
