@@ -331,6 +331,9 @@ function syncControls() {
   const hasTraffic = TRAFFIC_MODES.includes($('mode').value);
   $('traffic').disabled = !hasTraffic;
   $('traffic').title = hasTraffic ? '' : 'Traffic does not apply to walking or cycling';
+  const timed = hasTraffic && $('traffic').value !== 'any';
+  $('dir').options[0].text = timed ? 'From the centre (departing at the time above)' : 'From the centre';
+  $('dir').options[1].text = timed ? 'To the centre (arriving by the time above)' : 'To the centre';
 }
 syncControls();
 
