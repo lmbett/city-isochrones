@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":4785,"name":"Kamiji","country":"Democratic Republic of the Congo","pop":51316,"area_km2":5.0,"lat":-6.66013,"lon":23.27945,"uc":{"type":"Polygon","coordinates":[[[23.28571,-6.67002],[23.27569,-6.67002],[23.27546,-6.66191],[23.26544,-6.66191],[23.26496,-6.6457],[23.285,-6.6457],[23.28571,-6.67002]]]},"fua":null});

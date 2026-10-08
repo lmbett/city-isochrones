@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":6100,"name":"Kabala","country":"Democratic Republic of the Congo","pop":61839,"area_km2":5.0,"lat":-8.00283,"lon":26.84336,"uc":{"type":"Polygon","coordinates":[[[26.85244,-8.00871],[26.8424,-8.00871],[26.84274,-8.01683],[26.8327,-8.01683],[26.83171,-7.99248],[26.85178,-7.99248],[26.85244,-8.00871]]]},"fua":null});

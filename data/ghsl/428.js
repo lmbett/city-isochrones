@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":428,"name":"Nola","country":"Central African Republic","pop":50105,"area_km2":4.0,"lat":3.52095,"lon":16.05798,"uc":{"type":"Polygon","coordinates":[[[16.06278,3.5028],[16.05279,3.5028],[16.05313,3.53518],[16.06312,3.53518],[16.06278,3.5028]]]},"fua":null});

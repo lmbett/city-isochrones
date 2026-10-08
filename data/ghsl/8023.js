@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":8023,"name":"Senhor do Bonfim","country":"Brazil","pop":51584,"area_km2":12.0,"lat":-10.46002,"lon":-40.18788,"uc":{"type":"Polygon","coordinates":[[[-40.17635,-10.47978],[-40.2066,-10.47978],[-40.20399,-10.44722],[-40.17375,-10.44722],[-40.17635,-10.47978]]]},"fua":null});

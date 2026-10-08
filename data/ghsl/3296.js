@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":3296,"name":"Bili","country":"Democratic Republic of the Congo","pop":60558,"area_km2":8.0,"lat":4.56281,"lon":19.93513,"uc":{"type":"Polygon","coordinates":[[[19.94441,4.5471],[19.92441,4.5471],[19.92497,4.57949],[19.94496,4.57949],[19.94441,4.5471]]]},"fua":null});

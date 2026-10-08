@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":144,"name":"Dhobley","country":"Somalia","pop":57160,"area_km2":6.0,"lat":0.41047,"lon":41.01046,"uc":{"type":"Polygon","coordinates":[[[41.01923,0.3963],[40.99928,0.3963],[40.99936,0.42056],[41.01931,0.42056],[41.01923,0.3963]]]},"fua":null});

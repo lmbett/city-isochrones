@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":2572,"name":"Karacabey","country":"Turkey","pop":56103,"area_km2":6.0,"lat":40.21335,"lon":28.3618,"uc":{"type":"Polygon","coordinates":[[[28.37096,40.20231],[28.34737,40.20231],[28.3544,40.22918],[28.378,40.22918],[28.37096,40.20231]]]},"fua":null});

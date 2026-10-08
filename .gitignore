@@ -1,0 +1,6 @@
+# Personal HERE API key: never publish
+config.js
+# Original GHSL downloads (~300 MB); rebuild with scripts/prepare_ghsl.py
+data/raw/
+.DS_Store
+Isochrones_city_interactive.md

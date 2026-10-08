@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>City Isochrones vs GHSL</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@7.1.0/turf.min.js"></script>
+<script src="data/ghsl/cities.js"></script>
+<script src="config.js" onerror="void 0"></script>
+<style>
+  :root {
+    --bg: #f7f7f5; --panel: #ffffff; --text: #1d1d1b; --muted: #6b6b66; --line: #e2e1dc;
+    --accent: #1f5fbf; --iso30: #08306b; --iso60: #2171b5; --iso90: #6baed6;
+    --uc: #c2185b; --fua: #e66a00; --err: #b3261e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161615; --panel: #1f1f1d; --text: #ecebe6; --muted: #a09f99; --line: #34332f;
+      --accent: #6aa3ff; --err: #ff8a80;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  #app { display: grid; grid-template-columns: 380px 1fr; height: 100%; }
+  #side { overflow-y: auto; padding: 16px; background: var(--panel); border-right: 1px solid var(--line); }
+  #map { height: 100%; }
+  h1 { font-size: 18px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 16px; font-size: 13px; }
+  label { display: block; font-size: 12px; color: var(--muted); margin: 12px 0 4px; text-transform: uppercase; letter-spacing: .04em; }
+  input[type=text], input[type=password] { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px;
+    background: var(--bg); color: var(--text); font: inherit; }
+  .search { position: relative; }
+  #results { position: absolute; z-index: 1000; left: 0; right: 0; top: 100%; margin: 2px 0 0; padding: 0; list-style: none;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 6px; max-height: 320px; overflow-y: auto; display: none; }
+  #results li { padding: 6px 10px; cursor: pointer; display: flex; justify-content: space-between; gap: 8px; }
+  #results li:hover, #results li.active { background: var(--bg); }
+  #results .pop { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  button { padding: 7px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text);
+    font: inherit; cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  #status { margin-top: 12px; font-size: 13px; color: var(--muted); min-height: 1.4em; }
+  #status.err { color: var(--err); }
+  .city { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .city h2 { font-size: 16px; margin: 0; }
+  .facts { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; font-variant-numeric: tabular-nums; }
+  th, td { padding: 5px 4px; text-align: right; border-bottom: 1px solid var(--line); }
+  th:first-child, td:first-child { text-align: left; }
+  th { font-weight: 600; color: var(--muted); font-size: 12px; }
+  caption { text-align: left; font-weight: 600; padding: 6px 0 0; }
+  .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+  .best { font-weight: 700; }
+  .legend { font-size: 12px; color: var(--muted); margin-top: 12px; line-height: 1.6; }
+  details { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  summary { cursor: pointer; color: var(--text); }
+  @media (max-width: 760px) {
+    #app { grid-template-columns: 1fr; grid-template-rows: 55vh auto; height: auto; }
+    #map { height: 55vh; order: -1; }
+    #side { border-right: 0; border-top: 1px solid var(--line); }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <h1>City Isochrones vs GHSL</h1>
+    <p class="sub">Free-flow driving isochrones (30 / 60 / 90 min) from the GHSL urban-centre centroid, compared with the GHSL Urban Centre and Functional Urban Area.</p>
+
+    <label for="q">City (GHSL urban centre)</label>
+    <div class="search">
+      <input id="q" type="text" placeholder="e.g. Chicago, Lisbon, Lagos…" autocomplete="off">
+      <ul id="results"></ul>
+    </div>
+
+    <label for="key">HERE API key</label>
+    <input id="key" type="password" placeholder="paste key (stored in this browser only)">
+    <div class="facts">No key? Get a free one at <a href="https://platform.here.com" target="_blank" rel="noopener">platform.here.com</a> → Access Manager → Apps → Register new app → Credentials → API Keys.</div>
+    <div class="row">
+      <button id="recenter" title="Move the origin back to the GHSL centroid">Reset origin</button>
+      <button id="download">Download GeoJSON</button>
+    </div>
+    <div id="status"></div>
+
+    <div id="cityInfo"></div>
+
+    <div class="legend">
+      <div><span class="swatch" style="background:var(--iso30)"></span>30 min <span class="swatch" style="background:var(--iso60);margin-left:10px"></span>60 min <span class="swatch" style="background:var(--iso90);margin-left:10px"></span>90 min</div>
+      <div><span class="swatch" style="background:var(--uc)"></span>GHSL Urban Centre (R2024A) <span class="swatch" style="background:var(--fua);margin-left:10px"></span>GHSL FUA (R2019A)</div>
+      <div>Click the map to move the origin.</div>
+    </div>
+
+    <details>
+      <summary>About the metrics</summary>
+      <p><b>IoU</b> = area(isochrone ∩ GHSL) / area(isochrone ∪ GHSL); 1 means identical shapes.
+      <b>GHSL covered</b> = share of the GHSL area inside the isochrone.
+      <b>Outside GHSL</b> = share of the isochrone area beyond the GHSL boundary.
+      Areas are geodesic (Turf.js). Isochrones: HERE Isoline Routing v8, car, <code>departureTime=any</code> (no traffic).
+      GHSL polygons simplified at 100 m.</p>
+    </details>
+  </aside>
+  <div id="map"></div>
+</div>
+
+<script>
+const TIMES = [30, 60, 90];
+const COLORS = { 30: 'var(--iso30)', 60: 'var(--iso60)', 90: 'var(--iso90)' };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString(undefined, { maximumFractionDigits: 0 });
+const pct = x => (x == null || isNaN(x)) ? '–' : (100 * x).toFixed(0) + '%';
+
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+};
+
+// ---------- map ----------
+const map = L.map('map', { zoomControl: true }).setView([20, 0], 2);
+map.attributionControl.addAttribution('Isochrones &copy; HERE | GHSL &copy; European Commission JRC');
+const basemaps = {
+  'OpenStreetMap': L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors', maxZoom: 19 }),
+  'Light gray (Esri)': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri', maxZoom: 16 }),
+  'Light (CARTO)': L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO', maxZoom: 19 }),
+};
+const savedBase = store.get('basemap');
+(basemaps[savedBase] || basemaps['OpenStreetMap']).addTo(map);
+map.on('baselayerchange', e => store.set('basemap', e.name));
+const layers = {
+  iso: { 90: L.layerGroup().addTo(map), 60: L.layerGroup().addTo(map), 30: L.layerGroup().addTo(map) },
+  fua: L.layerGroup().addTo(map),
+  uc: L.layerGroup().addTo(map),
+  origin: L.layerGroup().addTo(map),
+};
+L.control.layers(basemaps, {
+  'Isochrone 30 min': layers.iso[30], 'Isochrone 60 min': layers.iso[60], 'Isochrone 90 min': layers.iso[90],
+  'GHSL Urban Centre': layers.uc, 'GHSL FUA': layers.fua,
+}, { collapsed: true }).addTo(map);
+
+// ---------- state ----------
+let city = null;       // loaded GHSL record
+let origin = null;     // [lat, lon]
+let isos = {};         // minutes -> GeoJSON Feature
+
+// ---------- HERE key ----------
+$('key').value = store.get('hereKey') || window.HERE_API_KEY || '';
+$('key').addEventListener('change', () => { store.set('hereKey', $('key').value.trim()); if (city) runIsochrones(); });
+
+function status(msg, err = false) { $('status').textContent = msg; $('status').className = err ? 'err' : ''; }
+
+// ---------- search ----------
+const CITIES = window.GHSL_CITIES || [];
+const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+CITIES.forEach(c => c._n = norm(c.name + ' ' + c.country));
+let activeIdx = -1;
+
+$('q').addEventListener('input', () => {
+  const q = norm($('q').value.trim());
+  const ul = $('results');
+  if (q.length < 2) { ul.style.display = 'none'; return; }
+  const terms = q.split(/\s+/);
+  const hits = CITIES.filter(c => terms.every(t => c._n.includes(t))).slice(0, 12);
+  ul.innerHTML = hits.map((c, i) =>
+    `<li data-id="${c.id}"><span>${c.name}, ${c.country}</span><span class="pop">${(c.pop / 1e6).toFixed(c.pop > 1e7 ? 0 : 1)}M</span></li>`).join('');
+  ul.style.display = hits.length ? 'block' : 'none';
+  activeIdx = -1;
+});
+$('q').addEventListener('keydown', e => {
+  const items = [...$('results').children];
+  if (!items.length) return;
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    activeIdx = (activeIdx + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+    items.forEach((li, i) => li.classList.toggle('active', i === activeIdx));
+    e.preventDefault();
+  } else if (e.key === 'Enter') {
+    (items[activeIdx] || items[0]).click();
+  }
+});
+$('results').addEventListener('click', e => {
+  const li = e.target.closest('li'); if (!li) return;
+  $('results').style.display = 'none';
+  const c = CITIES.find(c => c.id == li.dataset.id);
+  $('q').value = `${c.name}, ${c.country}`;
+  loadCity(c.id);
+});
+document.addEventListener('click', e => { if (!e.target.closest('.search')) $('results').style.display = 'none'; });
+
+// ---------- GHSL loading (script injection so the page works from file://) ----------
+let pendingLoad = null;
+window.ghslLoaded = data => { if (pendingLoad) pendingLoad(data); };
+function loadCity(id) {
+  status('Loading GHSL boundaries…');
+  new Promise((resolve, reject) => {
+    pendingLoad = resolve;
+    const s = document.createElement('script');
+    s.src = `data/ghsl/${id}.js`;
+    s.onerror = () => reject(new Error('Could not load GHSL file for this city.'));
+    s.onload = () => s.remove();
+    document.head.appendChild(s);
+  }).then(data => {
+    city = data;
+    origin = [data.lat, data.lon];
+    store.set('lastCity', id);
+    drawGhsl();
+    runIsochrones();
+  }).catch(e => status(e.message, true));
+}
+
+function drawGhsl() {
+  layers.uc.clearLayers(); layers.fua.clearLayers();
+  const uc = L.geoJSON(city.uc, { style: { color: css('--uc'), weight: 2.5, fill: false } }).addTo(layers.uc);
+  let bounds = uc.getBounds();
+  if (city.fua) {
+    const f = L.geoJSON(city.fua.geometry, { style: { color: css('--fua'), weight: 2.5, dashArray: '6 5', fill: false } }).addTo(layers.fua);
+    bounds = bounds.extend(f.getBounds());
+  }
+  map.fitBounds(bounds, { padding: [20, 20] });
+  drawOrigin();
+}
+
+function drawOrigin() {
+  layers.origin.clearLayers();
+  L.circleMarker(origin, { radius: 6, color: '#fff', weight: 2, fillColor: '#111', fillOpacity: 1 })
+    .bindTooltip(origin[0] === city.lat && origin[1] === city.lon ? 'GHSL centroid' : 'Custom origin')
+    .addTo(layers.origin);
+}
+
+map.on('click', e => {
+  if (!city) return;
+  origin = [+e.latlng.lat.toFixed(5), +e.latlng.lng.toFixed(5)];
+  drawOrigin(); runIsochrones();
+});
+$('recenter').addEventListener('click', () => { if (city) { origin = [city.lat, city.lon]; drawOrigin(); runIsochrones(); } });
+
+// ---------- HERE flexible polyline decoder ----------
+const FP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+function decodeFlexPolyline(str) {
+  const vals = []; let acc = 0, mul = 1;
+  for (const ch of str) {
+    const v = FP.indexOf(ch);
+    acc += (v & 31) * mul;
+    if (v & 32) mul *= 32; else { vals.push(acc); acc = 0; mul = 1; }
+  }
+  const header = vals[1], prec = header & 15, dim3 = (header >> 4) & 7;
+  const f = 10 ** prec, step = dim3 ? 3 : 2;
+  const signed = u => (u % 2) ? -(u + 1) / 2 : u / 2;
+  const pts = []; let lat = 0, lng = 0;
+  for (let i = 2; i + 1 < vals.length; i += step) {
+    lat += signed(vals[i]); lng += signed(vals[i + 1]);
+    pts.push([lng / f, lat / f]);
+  }
+  if (pts.length && (pts[0][0] !== pts.at(-1)[0] || pts[0][1] !== pts.at(-1)[1])) pts.push(pts[0]);
+  return pts;
+}
+
+// ---------- isochrones ----------
+async function fetchIsolines(key, lat, lon) {
+  const cacheKey = `iso:v1:${lat.toFixed(4)},${lon.toFixed(4)}`;
+  const cached = store.get(cacheKey);
+  if (cached) return JSON.parse(cached);
+  const p = new URLSearchParams({
+    transportMode: 'car', origin: `${lat},${lon}`, 'range[type]': 'time',
+    'range[values]': TIMES.map(t => t * 60).join(','), departureTime: 'any', apiKey: key,
+  });
+  const r = await fetch(`https://isoline.router.hereapi.com/v8/isolines?${p}`);
+  const js = await r.json();
+  if (!r.ok) throw new Error(`HERE ${r.status}: ${js.title || js.error_description || js.error || 'request failed'}`);
+  const out = {};
+  for (const iso of js.isolines) {
+    const polys = iso.polygons.map(pg => [decodeFlexPolyline(pg.outer), ...(pg.inner || []).map(decodeFlexPolyline)]);
+    out[iso.range.value / 60] = turf.feature({ type: 'MultiPolygon', coordinates: polys }, { minutes: iso.range.value / 60 });
+  }
+  store.set(cacheKey, JSON.stringify(out));
+  return out;
+}
+
+let runId = 0;
+async function runIsochrones() {
+  const key = $('key').value.trim();
+  Object.values(layers.iso).forEach(l => l.clearLayers());
+  isos = {};
+  renderStats();
+  if (!key) { status('Enter a HERE API key to compute isochrones. GHSL boundaries are shown.', true); return; }
+  const id = ++runId;
+  status('Requesting isochrones from HERE…');
+  try {
+    const res = await fetchIsolines(key, origin[0], origin[1]);
+    if (id !== runId) return;
+    isos = res;
+    for (const t of TIMES) {
+      if (!isos[t]) continue;
+      L.geoJSON(isos[t], { style: { color: css(`--iso${t}`), weight: 1.5, fillColor: css(`--iso${t}`), fillOpacity: 0.18 } })
+        .bindTooltip(`${t} min`, { sticky: true }).addTo(layers.iso[t]);
+    }
+    if (isos[90]) map.fitBounds(L.geoJSON(isos[90]).getBounds().extend(layers.uc.getLayers()[0]?.getBounds() || []), { padding: [20, 20] });
+    status('');
+    renderStats();
+  } catch (e) {
+    if (id === runId) status(e.message, true);
+  }
+}
+
+// ---------- comparison ----------
+function compare(iso, ghsl) {
+  const a = turf.feature(ghsl);
+  const ai = turf.area(iso), ag = turf.area(a);
+  let inter = 0;
+  try { const x = turf.intersect(turf.featureCollection([iso, a])); inter = x ? turf.area(x) : 0; } catch (e) { return { ai, iou: NaN }; }
+  return { ai, iou: inter / (ai + ag - inter), cov: inter / ag, out: 1 - inter / ai };
+}
+
+function statsTable(title, color, geom, areaKm2) {
+  if (!Object.keys(isos).length) return '';
+  const rows = TIMES.filter(t => isos[t]).map(t => ({ t, ...compare(isos[t], geom) }));
+  const best = rows.reduce((b, r) => (r.iou > (b?.iou ?? -1) ? r : b), null);
+  return `<table><caption><span class="swatch" style="background:${color}"></span>${title} · ${fmt(areaKm2)} km²</caption>
+    <tr><th>Isochrone</th><th>Area km²</th><th>IoU</th><th>GHSL covered</th><th>Outside GHSL</th></tr>
+    ${rows.map(r => `<tr class="${r === best ? 'best' : ''}"><td>${r.t} min</td><td>${fmt(r.ai / 1e6)}</td><td>${isNaN(r.iou) ? '–' : r.iou.toFixed(2)}</td><td>${pct(r.cov)}</td><td>${pct(r.out)}</td></tr>`).join('')}
+  </table>`;
+}
+
+function renderStats() {
+  if (!city) { $('cityInfo').innerHTML = ''; return; }
+  const ucArea = turf.area(turf.feature(city.uc)) / 1e6;
+  let html = `<div class="city"><h2>${city.name}, ${city.country}</h2>
+    <div class="facts">Urban Centre pop. 2025: ${fmt(city.pop)} · ${fmt(city.area_km2)} km²` +
+    (city.fua ? `<br>FUA “${city.fua.name}” pop. 2015: ${fmt(city.fua.pop2015)} · ${fmt(city.fua.area_km2)} km²` : '<br>No GHSL FUA for this urban centre') +
+    `<br>Origin: ${origin[0].toFixed(4)}, ${origin[1].toFixed(4)}</div>`;
+  html += statsTable('vs Urban Centre', css('--uc'), city.uc, ucArea);
+  if (city.fua) html += statsTable('vs FUA', css('--fua'), city.fua.geometry, turf.area(turf.feature(city.fua.geometry)) / 1e6);
+  $('cityInfo').innerHTML = html + '</div>';
+}
+
+// ---------- export ----------
+$('download').addEventListener('click', () => {
+  if (!city) return;
+  const feats = TIMES.filter(t => isos[t]).map(t => isos[t]);
+  feats.push(turf.feature(city.uc, { layer: 'GHSL Urban Centre', name: city.name }));
+  if (city.fua) feats.push(turf.feature(city.fua.geometry, { layer: 'GHSL FUA', name: city.fua.name }));
+  const blob = new Blob([JSON.stringify(turf.featureCollection(feats))], { type: 'application/geo+json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${city.name.replace(/\W+/g, '_')}_isochrones_ghsl.geojson`;
+  a.click();
+});
+
+// ---------- start ----------
+if (!CITIES.length) status('GHSL index not found — run scripts/prepare_ghsl.py first.', true);
+else {
+  const last = store.get('lastCity');
+  const c = CITIES.find(c => c.id == last) || CITIES.find(c => c.name === 'Chicago');
+  if (c) { $('q').value = `${c.name}, ${c.country}`; loadCity(c.id); }
+}
+</script>
+</body>
+</html>

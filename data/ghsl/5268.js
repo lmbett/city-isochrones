@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":5268,"name":"Sohung","country":"North Korea","pop":67190,"area_km2":6.0,"lat":38.42258,"lon":126.23314,"uc":{"type":"Polygon","coordinates":[[[126.23937,38.41077],[126.20454,38.41077],[126.22391,38.42851],[126.25875,38.42851],[126.23937,38.41077]]]},"fua":null});

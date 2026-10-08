@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":5757,"name":"Kibombo","country":"Democratic Republic of the Congo","pop":51437,"area_km2":5.0,"lat":-3.9215,"lon":25.92816,"uc":{"type":"Polygon","coordinates":[[[25.92968,-3.9156],[25.93967,-3.9156],[25.93998,-3.93179],[25.92,-3.93179],[25.91953,-3.90751],[25.92952,-3.90751],[25.92968,-3.9156]]]},"fua":null});

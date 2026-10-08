@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":6775,"name":"Nyangezi","country":"Democratic Republic of the Congo","pop":51202,"area_km2":6.0,"lat":-2.6622,"lon":28.87212,"uc":{"type":"Polygon","coordinates":[[[28.88504,-2.6693],[28.8451,-2.6693],[28.84498,-2.66121],[28.86495,-2.66121],[28.86484,-2.65312],[28.8848,-2.65312],[28.88504,-2.6693]]]},"fua":null});

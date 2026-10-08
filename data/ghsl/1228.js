@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":1228,"name":"Jilib","country":"Somalia","pop":104059,"area_km2":6.0,"lat":0.49408,"lon":42.7772,"uc":{"type":"Polygon","coordinates":[[[42.78564,0.48526],[42.75571,0.48526],[42.75577,0.50144],[42.78571,0.50144],[42.78564,0.48526]]]},"fua":null});

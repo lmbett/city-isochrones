@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":2093,"name":"Puerto Padre","country":"Cuba","pop":51483,"area_km2":6.0,"lat":21.19565,"lon":-76.60349,"uc":{"type":"Polygon","coordinates":[[[-76.58705,21.18122],[-76.60789,21.18122],[-76.61589,21.20615],[-76.59505,21.20615],[-76.58705,21.18122]]]},"fua":null});

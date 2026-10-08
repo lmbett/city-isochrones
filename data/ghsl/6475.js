@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":6475,"name":"Mbulula","country":"Democratic Republic of the Congo","pop":65863,"area_km2":5.0,"lat":-5.43852,"lon":27.42699,"uc":{"type":"Polygon","coordinates":[[[27.44531,-5.43805],[27.4353,-5.43805],[27.43553,-5.44615],[27.41552,-5.44615],[27.41506,-5.42995],[27.44508,-5.42995],[27.44531,-5.43805]]]},"fua":null});

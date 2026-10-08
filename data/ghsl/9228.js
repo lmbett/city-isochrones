@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":9228,"name":"Mudkhed","country":"India","pop":72448,"area_km2":9.0,"lat":19.15021,"lon":77.50488,"uc":{"type":"Polygon","coordinates":[[[77.51801,19.13469],[77.487,19.13469],[77.49421,19.15949],[77.52522,19.15949],[77.51801,19.13469]]]},"fua":null});

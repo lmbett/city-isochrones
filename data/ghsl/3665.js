@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":3665,"name":"Kamonia","country":"Democratic Republic of the Congo","pop":70975,"area_km2":7.0,"lat":-6.87862,"lon":20.927,"uc":{"type":"Polygon","coordinates":[[[20.9265,-6.87276],[20.94654,-6.87276],[20.94698,-6.88898],[20.91691,-6.88898],[20.91625,-6.86465],[20.92628,-6.86465],[20.9265,-6.87276]]]},"fua":null});

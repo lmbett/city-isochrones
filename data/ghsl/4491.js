@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":4491,"name":"Mashimba","country":"Democratic Republic of the Congo","pop":56387,"area_km2":7.0,"lat":-7.61005,"lon":22.52922,"uc":{"type":"Polygon","coordinates":[[[22.54307,-7.61911],[22.53303,-7.61911],[22.5333,-7.62723],[22.52326,-7.62723],[22.52221,-7.59477],[22.54228,-7.59477],[22.54307,-7.61911]]]},"fua":null});

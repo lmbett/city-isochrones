@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":4893,"name":"Urban centre 4893","country":"Sudan","pop":112934,"area_km2":4.0,"lat":11.53912,"lon":34.31257,"uc":{"type":"Polygon","coordinates":[[[34.32371,11.53054],[34.3035,11.53054],[34.30473,11.54684],[34.32494,11.54684],[34.32371,11.53054]]]},"fua":null});

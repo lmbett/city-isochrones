@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":5580,"name":"Bukama","country":"Democratic Republic of the Congo","pop":109718,"area_km2":7.0,"lat":-9.202,"lon":25.85386,"uc":{"type":"Polygon","coordinates":[[[25.86918,-9.2109],[25.839,-9.2109],[25.83827,-9.19465],[25.85839,-9.19465],[25.85802,-9.18652],[25.86808,-9.18652],[25.86918,-9.2109]]]},"fua":null});

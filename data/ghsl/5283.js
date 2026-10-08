@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":5283,"name":"Hamaschkorieb","country":"Sudan","pop":56238,"area_km2":4.0,"lat":16.15327,"lon":36.20469,"uc":{"type":"Polygon","coordinates":[[[36.20991,16.14417],[36.18945,16.14417],[36.19131,16.1606],[36.21177,16.1606],[36.20991,16.14417]]]},"fua":null});

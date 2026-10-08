@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":10748,"name":"Chodavaram","country":"India","pop":53156,"area_km2":4.0,"lat":17.8298,"lon":82.93558,"uc":{"type":"Polygon","coordinates":[[[82.94256,17.82246],[82.92199,17.82246],[82.92673,17.83894],[82.9473,17.83894],[82.94256,17.82246]]]},"fua":null});

@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":6909,"name":"Sagasi-Deybuk","country":"Russia","pop":69780,"area_km2":4.0,"lat":42.51094,"lon":47.84729,"uc":{"type":"Polygon","coordinates":[[[47.85619,42.50111],[47.83207,42.50111],[47.84078,42.51927],[47.86491,42.51927],[47.85619,42.50111]]]},"fua":null});

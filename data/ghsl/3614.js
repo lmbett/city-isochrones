@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":3614,"name":"Tshibinda","country":"Democratic Republic of the Congo","pop":60650,"area_km2":5.0,"lat":-7.24034,"lon":20.88819,"uc":{"type":"Polygon","coordinates":[[[20.89704,-7.25399],[20.88701,-7.25399],[20.88678,-7.24588],[20.87675,-7.24588],[20.87629,-7.22965],[20.89634,-7.22965],[20.89704,-7.25399]]]},"fua":null});

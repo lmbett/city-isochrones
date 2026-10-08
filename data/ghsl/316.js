@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":316,"name":"Urban centre 316","country":"Madagascar","pop":74866,"area_km2":1.0,"lat":-23.38481,"lon":43.76138,"uc":{"type":"Polygon","coordinates":[[[43.76749,-23.38899],[43.75697,-23.38899],[43.75526,-23.38063],[43.76578,-23.38063],[43.76749,-23.38899]]]},"fua":null});

@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":8914,"name":"Ramdurg","country":"India","pop":51386,"area_km2":4.0,"lat":15.9471,"lon":75.29768,"uc":{"type":"Polygon","coordinates":[[[75.3075,15.93889],[75.28705,15.93889],[75.29087,15.95531],[75.31131,15.95531],[75.3075,15.93889]]]},"fua":null});

@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":7934,"name":"Sharaqpur","country":"Pakistan","pop":54374,"area_km2":4.0,"lat":31.46437,"lon":74.10144,"uc":{"type":"Polygon","coordinates":[[[74.1116,31.45767],[74.08958,31.45767],[74.09804,31.47485],[74.12007,31.47485],[74.1116,31.45767]]]},"fua":null});

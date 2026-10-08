@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":6655,"name":"Lukonzolwa","country":"Democratic Republic of the Congo","pop":79051,"area_km2":5.0,"lat":-8.78012,"lon":28.63349,"uc":{"type":"Polygon","coordinates":[[[28.64464,-8.78834],[28.61449,-8.78834],[28.6141,-8.78022],[28.62415,-8.78022],[28.62377,-8.7721],[28.64387,-8.7721],[28.64464,-8.78834]]]},"fua":null});

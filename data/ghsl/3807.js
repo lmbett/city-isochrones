@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":3807,"name":"Mutombo-Lamata","country":"Democratic Republic of the Congo","pop":68120,"area_km2":4.0,"lat":-5.4778,"lon":21.00153,"uc":{"type":"Polygon","coordinates":[[[21.01277,-5.48666],[20.99276,-5.48666],[20.99241,-5.47046],[21.01242,-5.47046],[21.01277,-5.48666]]]},"fua":null});

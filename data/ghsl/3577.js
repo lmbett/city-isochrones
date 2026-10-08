@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":3577,"name":"Ceel Dheer","country":"Somalia","pop":63120,"area_km2":4.0,"lat":3.85015,"lon":47.18082,"uc":{"type":"Polygon","coordinates":[[[47.19051,3.84275],[47.17052,3.84275],[47.17108,3.85894],[47.19106,3.85894],[47.19051,3.84275]]]},"fua":null});

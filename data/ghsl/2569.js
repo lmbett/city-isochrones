@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":2569,"name":"Libenge","country":"Democratic Republic of the Congo","pop":65416,"area_km2":9.0,"lat":3.65225,"lon":18.63498,"uc":{"type":"Polygon","coordinates":[[[18.65194,3.65658],[18.64195,3.65658],[18.64164,3.6323],[18.62166,3.6323],[18.62207,3.66468],[18.65204,3.66468],[18.65194,3.65658]]]},"fua":null});

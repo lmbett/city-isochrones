@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":4983,"name":"Djulu","country":"Democratic Republic of the Congo","pop":79755,"area_km2":6.0,"lat":-9.68307,"lon":23.67078,"uc":{"type":"Polygon","coordinates":[[[23.68685,-9.69058],[23.65665,-9.69058],[23.65594,-9.67432],[23.68614,-9.67432],[23.68685,-9.69058]]]},"fua":null});

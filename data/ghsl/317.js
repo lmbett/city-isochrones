@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":317,"name":"Az Zuhrah","country":"Yemen","pop":56297,"area_km2":10.0,"lat":15.72386,"lon":43.00569,"uc":{"type":"Polygon","coordinates":[[[43.03726,15.71727],[42.98618,15.71727],[42.98833,15.73368],[43.03941,15.73368],[43.03726,15.71727]]]},"fua":null});

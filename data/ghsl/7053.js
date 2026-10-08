@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":7053,"name":"Soku","country":"Nigeria","pop":60061,"area_km2":2.0,"lat":4.67971,"lon":6.6839,"uc":{"type":"Polygon","coordinates":[[[6.68883,4.66857],[6.67883,4.66857],[6.67893,4.68477],[6.68893,4.68477],[6.68883,4.66857]]]},"fua":null});

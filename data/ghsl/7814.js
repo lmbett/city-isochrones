@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":7814,"name":"Charanchi","country":"Nigeria","pop":54307,"area_km2":6.0,"lat":12.66999,"lon":7.72921,"uc":{"type":"Polygon","coordinates":[[[7.73965,12.65627],[7.71939,12.65627],[7.71985,12.68076],[7.74011,12.68076],[7.73965,12.65627]]]},"fua":null});

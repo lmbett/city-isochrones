@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":4926,"name":"Gende Woin","country":"Ethiopia","pop":54395,"area_km2":6.0,"lat":10.92679,"lon":38.08762,"uc":{"type":"Polygon","coordinates":[[[38.10334,10.91946],[38.07306,10.91946],[38.07435,10.93575],[38.10463,10.93575],[38.10334,10.91946]]]},"fua":null});

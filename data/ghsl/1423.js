@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":1423,"name":"Urambo","country":"Tanzania","pop":51252,"area_km2":12.0,"lat":-5.08077,"lon":32.07192,"uc":{"type":"Polygon","coordinates":[[[32.08706,-5.09782],[32.05705,-5.09782],[32.05606,-5.06542],[32.08606,-5.06542],[32.08706,-5.09782]]]},"fua":null});

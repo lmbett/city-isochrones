@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":2379,"name":"Buulo Mareer","country":"Somalia","pop":113906,"area_km2":6.0,"lat":1.63082,"lon":44.52204,"uc":{"type":"Polygon","coordinates":[[[44.53178,1.61762],[44.51182,1.61762],[44.51215,1.64188],[44.53211,1.64188],[44.53178,1.61762]]]},"fua":null});

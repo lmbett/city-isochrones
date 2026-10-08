@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":6851,"name":"Luvungi","country":"Democratic Republic of the Congo","pop":54851,"area_km2":5.0,"lat":-2.85846,"lon":29.02627,"uc":{"type":"Polygon","coordinates":[[[29.03774,-2.8635],[29.02775,-2.8635],[29.02788,-2.87159],[29.01789,-2.87159],[29.01752,-2.84731],[29.03749,-2.84731],[29.03774,-2.8635]]]},"fua":null});

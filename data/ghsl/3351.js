@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":3351,"name":"Brabanta","country":"Democratic Republic of the Congo","pop":57551,"area_km2":6.0,"lat":-4.39092,"lon":20.29496,"uc":{"type":"Polygon","coordinates":[[[20.30181,-4.40136],[20.28182,-4.40136],[20.28142,-4.37707],[20.30141,-4.37707],[20.30181,-4.40136]]]},"fua":null});

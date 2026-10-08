@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":3984,"name":"Kakumba","country":"Democratic Republic of the Congo","pop":80996,"area_km2":6.0,"lat":-6.6333,"lon":21.34204,"uc":{"type":"Polygon","coordinates":[[[21.35126,-6.6457],[21.33122,-6.6457],[21.33057,-6.62137],[21.35061,-6.62137],[21.35126,-6.6457]]]},"fua":null});

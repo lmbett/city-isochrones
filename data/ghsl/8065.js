@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":8065,"name":"Sabuwar Abuja","country":"Nigeria","pop":53556,"area_km2":6.0,"lat":11.45984,"lon":8.20141,"uc":{"type":"Polygon","coordinates":[[[8.21319,11.44903],[8.19298,11.44903],[8.19342,11.47348],[8.21362,11.47348],[8.21319,11.44903]]]},"fua":null});

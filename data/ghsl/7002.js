@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":7002,"name":"Biakato","country":"Democratic Republic of the Congo","pop":58235,"area_km2":7.0,"lat":0.85464,"lon":29.25749,"uc":{"type":"Polygon","coordinates":[[[29.26676,0.84113],[29.2468,0.84113],[29.24691,0.86539],[29.25689,0.86539],[29.25693,0.87348],[29.26691,0.87348],[29.26676,0.84113]]]},"fua":null});

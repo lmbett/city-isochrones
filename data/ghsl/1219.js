@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":1219,"name":"Gondola","country":"Mozambique","pop":57040,"area_km2":12.0,"lat":-19.08487,"lon":33.64746,"uc":{"type":"Polygon","coordinates":[[[33.66517,-19.10163],[33.63417,-19.10163],[33.63001,-19.06857],[33.66101,-19.06857],[33.66517,-19.10163]]]},"fua":null});

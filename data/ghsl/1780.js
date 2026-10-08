@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":1780,"name":"Bouza","country":"Niger","pop":66091,"area_km2":6.0,"lat":14.42385,"lon":6.04286,"uc":{"type":"Polygon","coordinates":[[[6.05517,14.41399],[6.02464,14.41399],[6.02492,14.43037],[6.05545,14.43037],[6.05517,14.41399]]]},"fua":null});

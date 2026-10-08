@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":6154,"name":"Songwe","country":"Democratic Republic of the Congo","pop":56299,"area_km2":4.0,"lat":-7.88852,"lon":26.93971,"uc":{"type":"Polygon","coordinates":[[[26.94822,-7.89507],[26.92814,-7.89507],[26.92749,-7.87883],[26.94756,-7.87883],[26.94822,-7.89507]]]},"fua":null});

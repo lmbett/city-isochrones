@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":1405,"name":"Lukala","country":"Democratic Republic of the Congo","pop":55312,"area_km2":7.0,"lat":-5.51098,"lon":14.51105,"uc":{"type":"Polygon","coordinates":[[[14.5292,-5.51097],[14.51919,-5.51097],[14.51943,-5.52717],[14.49942,-5.52717],[14.49905,-5.50286],[14.52907,-5.50286],[14.5292,-5.51097]]]},"fua":null});

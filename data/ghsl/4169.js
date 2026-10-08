@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":4169,"name":"Jangyon","country":"North Korea","pop":63024,"area_km2":4.0,"lat":38.24997,"lon":125.09152,"uc":{"type":"Polygon","coordinates":[[[125.09395,38.2423],[125.07077,38.2423],[125.08983,38.26002],[125.11302,38.26002],[125.09395,38.2423]]]},"fua":null});

@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":2783,"name":"Sayad","country":"Afghanistan","pop":53761,"area_km2":5.0,"lat":36.13105,"lon":65.82744,"uc":{"type":"Polygon","coordinates":[[[65.81696,36.10012],[65.80557,36.10012],[65.82851,36.14397],[65.8399,36.14397],[65.81696,36.10012]]]},"fua":null});

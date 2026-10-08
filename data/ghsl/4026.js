@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":4026,"name":"Dekese","country":"Democratic Republic of the Congo","pop":70132,"area_km2":8.0,"lat":-3.48047,"lon":21.37557,"uc":{"type":"Polygon","coordinates":[[[21.37663,-3.47043],[21.38662,-3.47043],[21.38696,-3.49471],[21.36698,-3.49471],[21.36641,-3.45424],[21.3764,-3.45424],[21.37663,-3.47043]]]},"fua":null});

@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":7043,"name":"Filtu","country":"Ethiopia","pop":141543,"area_km2":6.0,"lat":5.11664,"lon":40.65794,"uc":{"type":"Polygon","coordinates":[[[40.66926,5.10592],[40.64926,5.10592],[40.65021,5.13022],[40.67022,5.13022],[40.66926,5.10592]]]},"fua":null});

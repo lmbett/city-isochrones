@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":2649,"name":"Mado Gashi","country":"Kenya","pop":60847,"area_km2":6.0,"lat":0.73124,"lon":39.17494,"uc":{"type":"Polygon","coordinates":[[[39.18463,0.71981],[39.16467,0.71981],[39.1648,0.74407],[39.18476,0.74407],[39.18463,0.71981]]]},"fua":null});

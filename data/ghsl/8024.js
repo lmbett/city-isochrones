@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":8024,"name":"Kwa Ibo","country":"Nigeria","pop":59747,"area_km2":8.0,"lat":4.54683,"lon":7.99807,"uc":{"type":"Polygon","coordinates":[[[8.0177,4.53901],[7.97771,4.53901],[7.97782,4.5552],[8.01781,4.5552],[8.0177,4.53901]]]},"fua":null});

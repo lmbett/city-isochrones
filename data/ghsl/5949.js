@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":5949,"name":"Compostela","country":"Philippines","pop":57052,"area_km2":9.0,"lat":7.66948,"lon":126.08838,"uc":{"type":"Polygon","coordinates":[[[126.1061,7.65969],[126.076,7.65969],[126.08045,7.68404],[126.11055,7.68404],[126.1061,7.65969]]]},"fua":null});

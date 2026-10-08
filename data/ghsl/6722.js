@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":6722,"name":"Jambusar","country":"India","pop":51496,"area_km2":6.0,"lat":22.0522,"lon":72.80195,"uc":{"type":"Polygon","coordinates":[[[72.81386,22.04609],[72.78248,22.04609],[72.78779,22.06275],[72.81917,22.06275],[72.81386,22.04609]]]},"fua":null});

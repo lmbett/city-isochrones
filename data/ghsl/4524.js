@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":4524,"name":"Ifetedo","country":"Nigeria","pop":53453,"area_km2":6.0,"lat":7.18402,"lon":4.69959,"uc":{"type":"Polygon","coordinates":[[[4.71234,7.17287],[4.69229,7.17287],[4.69244,7.1972],[4.7125,7.1972],[4.71234,7.17287]]]},"fua":null});

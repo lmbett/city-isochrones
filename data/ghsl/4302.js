@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":4302,"name":"Bena-Leka","country":"Democratic Republic of the Congo","pop":77435,"area_km2":7.0,"lat":-5.13134,"lon":22.17411,"uc":{"type":"Polygon","coordinates":[[[22.1754,-5.12212],[22.1854,-5.12212],[22.18592,-5.14642],[22.16592,-5.14642],[22.16522,-5.11402],[22.17522,-5.11402],[22.1754,-5.12212]]]},"fua":null});

@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":6760,"name":"Masisi","country":"Democratic Republic of the Congo","pop":73972,"area_km2":4.0,"lat":-1.39899,"lon":28.81926,"uc":{"type":"Polygon","coordinates":[[[28.83115,-1.40731],[28.81119,-1.40731],[28.81107,-1.39113],[28.83103,-1.39113],[28.83115,-1.40731]]]},"fua":null});

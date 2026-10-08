@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":4411,"name":"Aiyepe","country":"Nigeria","pop":73928,"area_km2":6.0,"lat":7.26291,"lon":4.63676,"uc":{"type":"Polygon","coordinates":[[[4.6527,7.25399],[4.62262,7.25399],[4.62272,7.27021],[4.6528,7.27021],[4.6527,7.25399]]]},"fua":null});

@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":2693,"name":"Matam\u00e8ye","country":"Niger","pop":71119,"area_km2":6.0,"lat":13.42207,"lon":8.47608,"uc":{"type":"Polygon","coordinates":[[[8.48494,13.40781],[8.46464,13.40781],[8.46517,13.43233],[8.48547,13.43233],[8.48494,13.40781]]]},"fua":null});

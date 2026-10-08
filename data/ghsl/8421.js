@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":8421,"name":"Gwaram","country":"Nigeria","pop":55505,"area_km2":4.0,"lat":11.27677,"lon":9.88503,"uc":{"type":"Polygon","coordinates":[[[9.89643,11.26975],[9.87623,11.26975],[9.87658,11.28604],[9.89678,11.28604],[9.89643,11.26975]]]},"fua":null});

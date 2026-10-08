@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":6082,"name":"Kapolowe","country":"Democratic Republic of the Congo","pop":125480,"area_km2":6.0,"lat":-10.93801,"lon":26.95206,"uc":{"type":"Polygon","coordinates":[[[26.96478,-10.95204],[26.9446,-10.95204],[26.94323,-10.9276],[26.96341,-10.9276],[26.96478,-10.95204]]]},"fua":null});

@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":4271,"name":"Chencha","country":"Ethiopia","pop":83620,"area_km2":8.0,"lat":6.24851,"lon":37.57639,"uc":{"type":"Polygon","coordinates":[[[37.58378,6.23222],[37.56375,6.23222],[37.56519,6.26465],[37.58521,6.26465],[37.58378,6.23222]]]},"fua":null});

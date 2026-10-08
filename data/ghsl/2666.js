@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":2666,"name":"Hyangsan","country":"North Korea","pop":53378,"area_km2":4.0,"lat":40.03915,"lon":126.17697,"uc":{"type":"Polygon","coordinates":[[[126.17993,40.03222],[126.15637,40.03222],[126.17709,40.05011],[126.20065,40.05011],[126.17993,40.03222]]]},"fua":null});

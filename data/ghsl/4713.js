@@ -1,0 +1,1 @@
+window.ghslLoaded({"id":4713,"name":"Kisenge","country":"Democratic Republic of the Congo","pop":67196,"area_km2":6.0,"lat":-10.67895,"lon":23.17844,"uc":{"type":"Polygon","coordinates":[[[23.18816,-10.69145],[23.16799,-10.69145],[23.16684,-10.66702],[23.18701,-10.66702],[23.18816,-10.69145]]]},"fua":null});
